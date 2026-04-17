@@ -1,0 +1,8 @@
+services:
+  geldbeutel:
+    build: .
+    container_name: "geldbeutel"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./local/data:/app/data
