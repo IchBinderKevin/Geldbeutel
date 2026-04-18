@@ -6,6 +6,8 @@ from fastapi.staticfiles import StaticFiles
 from uvicorn.config import Config
 from uvicorn.server import Server
 
+from api.account_router import create_account_router
+
 FRONTEND_DIST = "./dist"
 
 
@@ -17,6 +19,8 @@ class Webserver:
 
     def __init__(self):
         self.app = FastAPI()
+
+        self.app.include_router(create_account_router(), prefix="/api/accounts")
 
         if os.getenv("DEPLOYMENT_MODE") == "docker":
             self.app.mount(
