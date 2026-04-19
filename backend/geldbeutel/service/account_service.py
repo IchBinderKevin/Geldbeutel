@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import List
 
 from sqlalchemy import select, delete
@@ -59,7 +59,7 @@ async def update_account(account_id: int, update_account_request: UpdateAccountR
 
         account.name = update_account_request.name
         account.balance = update_account_request.balance
-        account.updated_at = datetime.now()
+        account.updated_at = datetime.now(UTC)
         try:
             await session.commit()
         except IntegrityError as e:
@@ -82,7 +82,7 @@ async def patch_account(account_id: int, patch_account_request: PatchAccountRequ
 
         for field, value in update_data.items():
                 setattr(account, field, value)
-        account.updated_at = datetime.now()
+        account.updated_at = datetime.now(UTC)
         try:
             await session.commit()
         except IntegrityError as e:

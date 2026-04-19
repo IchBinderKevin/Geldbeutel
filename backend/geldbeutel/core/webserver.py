@@ -7,6 +7,7 @@ from uvicorn.config import Config
 from uvicorn.server import Server
 
 from api.account_router import create_account_router
+from api.category_router import create_category_router
 
 FRONTEND_DIST = "./dist"
 
@@ -21,6 +22,7 @@ class Webserver:
         self.app = FastAPI()
 
         self.app.include_router(create_account_router(), prefix="/api/accounts")
+        self.app.include_router(create_category_router(), prefix="/api/categories")
 
         if os.getenv("DEPLOYMENT_MODE") == "docker":
             self.app.mount(
