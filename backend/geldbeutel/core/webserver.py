@@ -8,6 +8,7 @@ from uvicorn.server import Server
 
 from api.account_router import create_account_router
 from api.category_router import create_category_router
+from api.transaction_router import create_transaction_router
 
 FRONTEND_DIST = "./dist"
 
@@ -23,6 +24,7 @@ class Webserver:
 
         self.app.include_router(create_account_router(), prefix="/api/accounts")
         self.app.include_router(create_category_router(), prefix="/api/categories")
+        self.app.include_router(create_transaction_router(), prefix="/api/transactions")
 
         if os.getenv("DEPLOYMENT_MODE") == "docker":
             self.app.mount(
