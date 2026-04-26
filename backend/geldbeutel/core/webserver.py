@@ -11,6 +11,7 @@ from api.category_router import create_category_router
 from api.transaction_router import create_transaction_router
 
 FRONTEND_DIST = "./dist"
+FALLBACK_VERSION_NAME = "dev"
 
 
 class Webserver:
@@ -25,6 +26,7 @@ class Webserver:
         self.app.include_router(create_account_router(), prefix="/api/accounts")
         self.app.include_router(create_category_router(), prefix="/api/categories")
         self.app.include_router(create_transaction_router(), prefix="/api/transactions")
+        self.app.get("/api/version")(lambda: {"version": os.getenv("APP_VERSION") if os.getenv("APP_VERSION") else FALLBACK_VERSION_NAME})
 
         if os.getenv("DEPLOYMENT_MODE") == "docker":
             self.app.mount(
